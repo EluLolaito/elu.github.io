@@ -62,12 +62,6 @@
         linksArray.forEach(function(link) {
             listContainer.appendChild(link);
         });
-
-        // Add the download attribute to each link
-        var downloadLinks = document.querySelectorAll('.download-links a');
-        downloadLinks.forEach(function(link) {
-            link.setAttribute('download', '');
-        });
     </script>
 </body>
 </html>
