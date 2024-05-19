@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Click to download.</title>
+    <title>Downloads</title>
     <link rel="icon" href="https://raw.githubusercontent.com/elulolaito/elulolaito.github.io/main/logo_white.svg" type="image/svg">
     <style>
         body {
@@ -13,6 +13,19 @@
             font-size: 20px;
             margin: 0;
             padding: 20px;
+            text-align: center;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
         }
         a {
             color: #ebdbb2; /* Light foreground color for links */
@@ -21,55 +34,99 @@
         a:hover {
             text-decoration: underline;
         }
-        .download-links {
-            margin-top: 20px;
-            list-style: none;
-            padding: 0;
-        }
-        .download-links li {
-            margin-bottom: 10px;
-        }
     </style>
 </head>
 <body>
     <h1>Downloads</h1>
-    <ul class="download-links">
-        <li><a href="https://drive.google.com/file/d/1GEs_jQO1erB5RVJ7SpQyFFtUDh79dl5O/view?usp=drive_link" download>Kẹo bông gòn</a></li>
-        <li><a href="https://drive.google.com/file/d/1dVT3Fmebtabm9DWQfXlJvk8jN0MbtA3c/view?usp=drive_link" download>Atohitotsu</a></li>
-        <li><a href="https://drive.google.com/file/d/1Lxxtk3cS7LN0mr5Pu9lsAjWmWOng35HT/view?usp=drive_link" download>Download Example 2</a></li>
-        <li><a href="https://drive.google.com/file/d/16e6pK1_wP-X9GUhswWNz_DuM4kZdwRGm/view?usp=drive_link" download>Download Example 2</a></li>
-        <li><a href="https://drive.google.com/file/d/1eIMAp8b4iLwzcOPjPIkN_kCMPcyCROwY/view?usp=drive_link" download>Download Example 2</a></li>
-        <li><a href="https://drive.google.com/file/d/1erlwEt-rxPShFPYmEvpnr6agiYUbxW3U/view?usp=drive_link" download>Download Example 2</a></li>
-        <li><a href="https://drive.google.com/file/d/1_hjp-lTKemwvXwWwjl-Tq3SPI2E2HJgV/view?usp=drive_link" download>Download Example 2</a></li>
-    </ul>
-    <script>
-        // Get the list of links
-        var downloadLinks = document.querySelectorAll('.download-links li');
-        
-        // Convert the NodeList to an array
-        var linksArray = Array.from(downloadLinks);
-        
-        // Sort the array alphabetically based on the text content of the links
-        linksArray.sort(function(a, b) {
-            var textA = a.textContent.toUpperCase();
-            var textB = b.textContent.toUpperCase();
-            return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
-        });
-        
-        // Clear the existing list
-        var listContainer = document.querySelector('.download-links');
-        listContainer.innerHTML = '';
-        
-        // Append the sorted links back to the list
-        linksArray.forEach(function(link) {
-            listContainer.appendChild(link);
-        });
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Author</th>
+                <th>Genre</th>
+                <th>Length</th>
+                <th>Instrument</th>
+                <th>Major</th>
+            </tr>
+        </thead>
+        <tbody id="music-table-body">
+            <!-- Music data will be dynamically added here -->
+        </tbody>
+    </table>
 
-        // Add the download attribute to each link
-        var downloadLinks = document.querySelectorAll('.download-links a');
-        downloadLinks.forEach(function(link) {
-            link.setAttribute('download', '');
-        });
+    <script>
+        // Function to fetch CSV data
+        function fetchCSV(url, callback) {
+            fetch(url)
+                .then(response => response.text())
+                .then(data => {
+                    callback(data);
+                });
+        }
+
+        // Function to parse CSV data and populate the table
+        function parseCSV(data) {
+            // Split CSV rows
+            var rows = data.split('\n');
+
+            // Remove header row
+            rows.shift();
+
+            // Iterate through each row
+            rows.forEach(row => {
+                // Split row into columns
+                var columns = row.split(',');
+
+                // Extract data
+                var name = columns[0];
+                var author = columns[1];
+                var genre = columns[2];
+                var length = columns[3];
+                var instrument = columns[4];
+                var major = columns[5];
+
+                // Create table row
+                var tr = document.createElement('tr');
+
+                // Create table data cells
+                var tdName = document.createElement('td');
+                var tdAuthor = document.createElement('td');
+                var tdGenre = document.createElement('td');
+                var tdLength = document.createElement('td');
+                var tdInstrument = document.createElement('td');
+                var tdMajor = document.createElement('td');
+
+                // Create download link for the name
+                var downloadLink = document.createElement('a');
+                downloadLink.href = columns[6]; // Assuming the 7th column contains the download link
+                downloadLink.textContent = name;
+                downloadLink.download = '';
+
+                // Append download link to name cell
+                tdName.appendChild(downloadLink);
+
+                // Populate other cells
+                tdAuthor.textContent = author;
+                tdGenre.textContent = genre;
+                tdLength.textContent = length;
+                tdInstrument.textContent = instrument;
+                tdMajor.textContent = major;
+
+                // Append cells to row
+                tr.appendChild(tdName);
+                tr.appendChild(tdAuthor);
+                tr.appendChild(tdGenre);
+                tr.appendChild(tdLength);
+                tr.appendChild(tdInstrument);
+                tr.appendChild(tdMajor);
+
+                // Append row to table body
+                document.getElementById('music-table-body').appendChild(tr);
+            });
+        }
+
+        // Fetch and parse CSV data
+        fetchCSV('https://raw.githubusercontent.com/elulolaito/elulolaito.github.io/main/music_data.csv', parseCSV);
     </script>
 </body>
 </html>
