@@ -16,14 +16,19 @@
             text-align: center;
         }
         table {
-            width: 100%;
+            width: 90%;
             border-collapse: collapse;
             margin-top: 20px;
             background-color: transparent;
             border: 3px solid #ebdbb2; /* Add border around the table */
+            margin-left: auto; 
+            margin-right: auto;
         }
         th, td {
-            padding: 10px;
+            padding-top: 5px;
+            padding-bottom: 5px;
+            padding-left: 0px; 
+            padding-right: 0px;
             border-bottom: 3px solid #ebdbb2;
             border-right: 3px solid #ebdbb2;
         }
@@ -79,7 +84,7 @@
             // Iterate through each row
             rows.forEach(row => {
                 // Split row into columns
-                var columns = row.split(',');
+                var columns = row.split(';');
 
                 // Extract data
                 var name = columns[0];
