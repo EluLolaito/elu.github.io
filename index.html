@@ -50,6 +50,7 @@
                 <th>Length</th>
                 <th>Instrument</th>
                 <th>Major</th>
+                <th>BPM</th>
             </tr>
         </thead>
         <tbody id="music-table-body">
@@ -87,7 +88,7 @@
                 var length = columns[3];
                 var instrument = columns[4];
                 var major = columns[5];
-
+                var bpm = columns[6];
                 // Create table row
                 var tr = document.createElement('tr');
 
@@ -98,10 +99,10 @@
                 var tdLength = document.createElement('td');
                 var tdInstrument = document.createElement('td');
                 var tdMajor = document.createElement('td');
-
+                var tdBpm = document.createElement('td');
                 // Create download link for the name
                 var downloadLink = document.createElement('a');
-                downloadLink.href = columns[6]; // Assuming the 7th column contains the download link
+                downloadLink.href = columns[7]; // Assuming the 7th column contains the download link
                 downloadLink.textContent = name;
                 downloadLink.download = '';
 
@@ -114,6 +115,7 @@
                 tdLength.textContent = length;
                 tdInstrument.textContent = instrument;
                 tdMajor.textContent = major;
+                tdBpm.textContent = bpm;
 
                 // Append cells to row
                 tr.appendChild(tdName);
@@ -122,7 +124,7 @@
                 tr.appendChild(tdLength);
                 tr.appendChild(tdInstrument);
                 tr.appendChild(tdMajor);
-
+                tr.appendChild(tdBpm);
                 // Append row to table body
                 document.getElementById('music-table-body').appendChild(tr);
             });
