@@ -15,6 +15,63 @@
             padding: 20px;
             text-align: center;
         }
+        /* Container for category boxes */
+        .categories-container {
+            display: flex; /* Use flexbox */
+            justify-content: center; /* Center the categories */
+            padding: 0 0px; /* Add padding on each side */
+            margin-bottom: 20px; /* Add margin at the bottom */
+            white-space: nowrap;
+        }
+
+        .dropdown {
+            display: inline-block;
+            margin: 0px 0px; /* Add margin around each dropdown */
+            position: relative;
+            flex: 1;
+            width: 25%; /* Set width to 25% minus padding */
+            max-width: calc(25%)
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #000;
+            min-width: 40px;
+            box-shadow: none;
+            z-index: 1;
+            border: 2px solid #ebdbb2;
+            outline: none;
+            font-family: 'Lexend', sans-serif;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown-content a {
+            color: #ebdbb2;
+            padding: 6px 0px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {
+            background-color: transparent;
+        }
+
+        .dropdown button.dropbtn {
+            border: 2px solid #ebdbb2; /* Remove border from the button */
+            font-family: 'Lexend', sans-serif;
+            color: #ebdbb2;
+            background-color: #000;
+            padding: 10px 5px; /* Add padding */
+            width: 100%;
+        }
+
         table {
             width: 90%;
             border-collapse: collapse;
@@ -45,6 +102,46 @@
     </style>
 </head>
 <body>
+    <header>
+        <div style="text-align: center;">
+            <div class="dropdown">
+                <button class="dropbtn">Blogs</button>
+                <div class="dropdown-content">
+                    <a href="#">Blog 1</a>
+                    <a href="#">Blog 2</a>
+                    <a href="#">Blog 3</a>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <button class="dropbtn">Music</button>
+                <div class="dropdown-content">
+                    <a href="#">Song 1</a>
+                    <a href="#">Song 2</a>
+                    <a href="#">Song 3</a>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <button class="dropbtn">Questions</button>
+                <div class="dropdown-content">
+                    <a href="#">Question 1</a>
+                    <a href="#">Question 2</a>
+                    <a href="#">Question 3</a>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <button class="dropbtn">Contacts</button>
+                <div class="dropdown-content">
+                    <a href="#">Contact 1</a>
+                    <a href="#">Contact 2</a>
+                    <a href="#">Contact 3</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
     <h1>Downloads</h1>
     <table>
         <thead>
@@ -66,74 +163,74 @@
     <script>
         // Function to fetch CSV data
         function fetchCSV(url, callback) {
-            fetch(url)
-                .then(response => response.text())
-                .then(data => {
-                    callback(data);
-                });
-        }
+                    fetch(url)
+                        .then(response => response.text())
+                        .then(data => {
+                                    callback(data);
+                                });
+                }
 
         // Function to parse CSV data and populate the table
         function parseCSV(data) {
-            // Split CSV rows
-            var rows = data.split('\n');
+                    // Split CSV rows
+                    var rows = data.split('\n');
 
-            // Remove header row
-            rows.shift();
+                    // Remove header row
+                    rows.shift();
 
-            // Iterate through each row
-            rows.forEach(row => {
-                // Split row into columns
-                var columns = row.split(';');
+                    // Iterate through each row
+                    rows.forEach(row => {
+                                // Split row into columns
+                                var columns = row.split(';');
 
-                // Extract data
-                var name = columns[0];
-                var author = columns[1];
-                var genre = columns[2];
-                var length = columns[3];
-                var instrument = columns[4];
-                var major = columns[5];
-                var bpm = columns[6];
-                // Create table row
-                var tr = document.createElement('tr');
+                                // Extract data
+                                var name = columns[0];
+                                var author = columns[1];
+                                var genre = columns[2];
+                                var length = columns[3];
+                                var instrument = columns[4];
+                                var major = columns[5];
+                                var bpm = columns[6];
+                                // Create table row
+                                var tr = document.createElement('tr');
 
-                // Create table data cells
-                var tdName = document.createElement('td');
-                var tdAuthor = document.createElement('td');
-                var tdGenre = document.createElement('td');
-                var tdLength = document.createElement('td');
-                var tdInstrument = document.createElement('td');
-                var tdMajor = document.createElement('td');
-                var tdBpm = document.createElement('td');
-                // Create download link for the name
-                var downloadLink = document.createElement('a');
-                downloadLink.href = columns[7]; // Assuming the 7th column contains the download link
-                downloadLink.textContent = name;
-                downloadLink.download = '';
+                                // Create table data cells
+                                var tdName = document.createElement('td');
+                                var tdAuthor = document.createElement('td');
+                                var tdGenre = document.createElement('td');
+                                var tdLength = document.createElement('td');
+                                var tdInstrument = document.createElement('td');
+                                var tdMajor = document.createElement('td');
+                                var tdBpm = document.createElement('td');
+                                // Create download link for the name
+                                var downloadLink = document.createElement('a');
+                                downloadLink.href = columns[7]; // Assuming the 7th column contains the download link
+                                downloadLink.textContent = name;
+                                downloadLink.download = '';
 
-                // Append download link to name cell
-                tdName.appendChild(downloadLink);
+                                // Append download link to name cell
+                                tdName.appendChild(downloadLink);
 
-                // Populate other cells
-                tdAuthor.textContent = author;
-                tdGenre.textContent = genre;
-                tdLength.textContent = length;
-                tdInstrument.textContent = instrument;
-                tdMajor.textContent = major;
-                tdBpm.textContent = bpm;
+                                // Populate other cells
+                                tdAuthor.textContent = author;
+                                tdGenre.textContent = genre;
+                                tdLength.textContent = length;
+                                tdInstrument.textContent = instrument;
+                                tdMajor.textContent = major;
+                                tdBpm.textContent = bpm;
 
-                // Append cells to row
-                tr.appendChild(tdName);
-                tr.appendChild(tdAuthor);
-                tr.appendChild(tdGenre);
-                tr.appendChild(tdLength);
-                tr.appendChild(tdInstrument);
-                tr.appendChild(tdMajor);
-                tr.appendChild(tdBpm);
-                // Append row to table body
-                document.getElementById('music-table-body').appendChild(tr);
-            });
-        }
+                                // Append cells to row
+                                tr.appendChild(tdName);
+                                tr.appendChild(tdAuthor);
+                                tr.appendChild(tdGenre);
+                                tr.appendChild(tdLength);
+                                tr.appendChild(tdInstrument);
+                                tr.appendChild(tdMajor);
+                                tr.appendChild(tdBpm);
+                                // Append row to table body
+                                document.getElementById('music-table-body').appendChild(tr);
+                            });
+                }
 
         // Fetch and parse CSV data
         fetchCSV('https://raw.githubusercontent.com/elulolaito/elulolaito.github.io/main/music_data.csv', parseCSV);
